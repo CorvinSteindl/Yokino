@@ -28,13 +28,12 @@
       {% endif %}
     </ul>
     {# Logout & Welcome Message #}
-{# Welcome, {{ user.get_username }} #}
+    {% if user.is_authenticated %}
   <ul class="nav navbar-nav navbar-right">
     <li><a>Welcome, {{ user.username }}</a></li>
-    <a type="button" class="btn btn-danger navbar-btn" href="">Logout</a>
-
- </ul>
-
+    <a type="button" class="btn btn-danger navbar-btn" href="{%url 'logout'%}">Logout</a>
+   </ul>
+{% endif %}
 
 
 

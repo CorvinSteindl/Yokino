@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Login{% endblock %}
+{% block content %}
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-offset-5 col-md-3">
+            <h4>Yokino - Login</h4>
+            <form method="post"action="{% url 'login' %}">
+              {% csrf_token %}
+              <input type="text" name="username" id="username" class="form-control input-sm" placeholder="Username" />
+              </br>
+              <input type="password" name="password" id="password" class="form-control input-sm" placeholder="Password" />
+              </br>
+              <button type="submit" class="btn btn-primary btn-md">Login <i class="fa fa-sign-in"></i></button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

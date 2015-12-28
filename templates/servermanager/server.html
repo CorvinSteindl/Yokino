@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}{{ server }}{% endblock %}
+{% block content %}
+<div class="form-group">
+  <label for="InputParam">Parameter</label>
+  <input type="text" class="form-control" id="InputParam" placeholder="e.g. -mod=@test" size="15">
+  <a type="button" class="btn btn-success" href="">Save</a>
+</div>
+
+<a type="button" class="btn btn-success" href="{% url 'start_server' server.id %}">Starten</a>
+<a type="button" class="btn btn-danger" href="{% url 'stop_server' server.id %}">Stoppen</a>
+<a type="button" class="btn btn-warning">Updaten</a>
+
+{% endblock %}

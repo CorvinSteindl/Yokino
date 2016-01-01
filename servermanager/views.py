@@ -7,6 +7,7 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 
+from .auth import is_owner_or_forbidden
 from .models import Server, ServerInstance
 
 
@@ -21,6 +22,7 @@ def index(request):
 @login_required(login_url='login')
 def server(request, server_id):
     server = get_object_or_404(Server, pk=server_id)
+    is_owner_or_forbidden(server, request.user)
     return render(request, 'servermanager/server.html', {
         'serverl': Server.objects.filter(owner=request.user),
         'server': server
@@ -30,6 +32,7 @@ def server(request, server_id):
 @login_required(login_url='login')
 def start_server(request, server_id):
     server = get_object_or_404(Server, pk=server_id)
+    is_owner_or_forbidden(server, request.user)
     p = Popen([server.path + server.type, server.params])
     ServerInstance(pid=p.pid,
                    server=server,
@@ -40,6 +43,7 @@ def start_server(request, server_id):
 @login_required(login_url='login')
 def stop_server(request, server_id):
     server = get_object_or_404(Server, pk=server_id)
+    is_owner_or_forbidden(server, request.user)
     try:
         si = ServerInstance.objects.get(server=server)
     except DoesNotExist:
@@ -52,6 +56,7 @@ def stop_server(request, server_id):
 @login_required(login_url='login')
 def params_server(request, server_id):
     server = get_object_or_404(Server, pk=server_id)
+    is_owner_or_forbidden(server, request.user)
     print(request.POST)
     if 'params' in request.POST:
         server.params = request.POST['params']
